@@ -38,17 +38,3 @@ class traductor:
         
     def __hash__(self):
         return hash(self.escritoEn)
-
-#A estas alturas, que tanto danho mas hace tener una clase tambien para programas?
-class programa:
-    def __init__(self, escritoEn, nombre):
-        self.escritoEn = escritoEn
-        self.nombre = nombre
-
-    def __eq__(self, other):
-        if not isinstance(other, programa):
-            return False
-        return self.escritoEn == other.escritoEn and self.nombre == other.nombre
-
-    def __hash__(self):
-        return hash((self.escritoEn, self.nombre))

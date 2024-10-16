@@ -1,9 +1,6 @@
-import estructuras
-import funciones
-#Guardaremos los programas, interpretes y traductores en sets para que no se repitan
-programas = {}
-interpretes = {}
-traductores = {}
+#estos modulos estan definidos en el directorio 'pregunta_3'
+#from estructuras import *
+from funciones import *
 
 #Cuerpo principal
 continuar = True
@@ -26,9 +23,9 @@ while continuar:
     else:
         instruccion = comando.split()
         if instruccion[0] == 'DEFINIR':
-            definir(instruccion[1:])
+            definir(instruccion[1:4])
         elif instruccion[0] == 'EJECUTABLE':
-            ejecutable(instruccion[1:])
+            ejecutable(instruccion[1])
         else:
             print("Comando no reconocido.")
             print("Opciones:\n  DEFINIR <tipo> [<argumentos>]")
