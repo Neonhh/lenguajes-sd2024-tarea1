@@ -1,4 +1,3 @@
-
 public class potenciacionModulada {
     public static void main(String[] args) {
         

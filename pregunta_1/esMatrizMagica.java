@@ -13,18 +13,18 @@ public class esMatrizMagica {
         }
 
         int[][] A = new int[n][n];
-        Scanner sc = new Scanner(System.in);
-
         //leemos la matriz
-        for(int i = 0; i < n; i++){
-            System.out.println("Inserte los elementos de la fila " + (i+1) + ".");
-            for (int j = 0; j < n; j++){
-                System.out.print("Elemento " + (j+1) + ": ");
-                A[i][j] = sc.nextInt();
+        try (Scanner sc = new Scanner(System.in)) {
+            //leemos la matriz
+            for(int i = 0; i < n; i++){
+                System.out.println("Inserte los elementos de la fila " + (i+1) + ".");
+                for (int j = 0; j < n; j++){
+                    System.out.print("Elemento " + (j+1) + ": ");
+                    A[i][j] = sc.nextInt();
+                }
+                System.out.println();
             }
-            System.out.println();
         }
-        sc.close();
         System.out.println("Matriz ingresada:");
         imprimirMatriz(A);
 
