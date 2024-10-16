@@ -6,8 +6,8 @@ from funciones import *
 continuar = True
 #Prompt inicial
 print("Iniciando ejecucion del programa simuladorT.")
-print("Opciones:\n  DEFINIR <tipo> [<argumentos>]")
-print("EJECUTABLE <programa>\n SALIR\n")
+print("Opciones:\n DEFINIR <tipo> [<argumentos>]")
+print(" EJECUTABLE <programa>\n SALIR\n")
 
 #Seleccion de opciones
 while continuar:

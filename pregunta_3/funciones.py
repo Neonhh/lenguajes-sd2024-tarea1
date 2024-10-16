@@ -41,7 +41,12 @@ def ejecutable(nombre):
 #define un nuevo programa en el lenguaje especificado
 #Nota: Si el programa ya esta definido, la definicion anterior se sobreescribe
 def programa(nombre, lenguaje):
+    if nombre in programas:
+        print("El programa '" + nombre + "' ya esta definido.")
+        return
+
     programas.update({nombre: lenguaje})
+    print("Se definio el programa '" + nombre + "', ejecutable en '" + lenguaje + "'.")    
 
 #Define un interprete para lenguaje escrito en lenguaje_base
 def interprete(lenguaje_base, lenguaje):
@@ -58,17 +63,18 @@ def interprete(lenguaje_base, lenguaje):
             for interpretado in lenguajes_interpretados:
                 lenguajes.add(interpretado)
             
-            interpretes.remove(lenguaje)
+            interpretes.pop(lenguaje)
         #Si no hay mas lenguajes interpretados, no hacer nada
-        return
-    
-    #Si no, queremos ver si ya hay un interprete escrito en lenguaje_base
-    lenguajes_interpretados = interpretes.get(lenguaje_base)
-
-    #Si no lo hay, define una nuevo. Si lo hay, agregale este lenguaje
-    if lenguajes_interpretados == None:
-        interpretes.update({lenguaje_base: {lenguaje}})
     else:
-        lenguajes_interpretados.add(lenguaje)
-        interpretes.update({lenguaje_base: lenguajes_interpretados})
+        #Si no, queremos ver si ya hay un interprete escrito en lenguaje_base
+        lenguajes_interpretados = interpretes.get(lenguaje_base)
+
+        #Si no lo hay, define una nuevo. Si lo hay, agregale este lenguaje
+        if lenguajes_interpretados == None:
+            interpretes.update({lenguaje_base: {lenguaje}})
+        else:
+            lenguajes_interpretados.add(lenguaje)
+            interpretes.update({lenguaje_base: lenguajes_interpretados})
+    
+    print("Se definió un intérprete de '"+ lenguaje + "' escrito en '" + lenguaje_base + "'.")
         
