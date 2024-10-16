@@ -54,16 +54,7 @@ def interprete(lenguaje_base, lenguaje):
     #Primero, queremos ver si este interprete nos permite ejecutar programas
     #de este lenguaje
     if lenguaje_base in lenguajes:
-        lenguajes.add(lenguaje)
-
-        #Si lo permite, entonces tambien permite correr los interpretes
-        #que tengan a este como lenguaje_base
-        lenguajes_interpretados = interpretes.get(lenguaje)
-        if lenguajes_interpretados != None:
-            for interpretado in lenguajes_interpretados:
-                lenguajes.add(interpretado)
-            
-            interpretes.pop(lenguaje)
+        agregar_lenguaje(lenguaje)
         #Si no hay mas lenguajes interpretados, no hacer nada
     else:
         #Si no, queremos ver si ya hay un interprete escrito en lenguaje_base
@@ -77,4 +68,23 @@ def interprete(lenguaje_base, lenguaje):
             interpretes.update({lenguaje_base: lenguajes_interpretados})
     
     print("Se definió un intérprete de '"+ lenguaje + "' escrito en '" + lenguaje_base + "'.")
-        
+
+#Define un traductor escrito en lenguaje_base, de lenguaje_origen a lenguaje_destino
+def traductor(lenguaje_base, lenguaje_origen, lenguaje_destino):
+    pass
+
+#Maneja las operaciones a considerar cuando se agrega un lenguaje ejecutable
+# esta funcion se define recursivamente para que se puedan agregar lenguajes
+# en cadena siempre que existan los interpretes (o traductores)
+# Es muy probable que esto hubiera podido hacerse con un DSU... peeero ya no hice eso desde el principio, asi que eh.
+def agregar_lenguaje(lenguaje):
+    lenguajes.add(lenguaje)
+
+    #Si lo permite, entonces tambien permite correr los interpretes
+    #que tengan a este como lenguaje_base
+    lenguajes_interpretados = interpretes.get(lenguaje)
+    if lenguajes_interpretados != None:
+        for interpretado in lenguajes_interpretados:
+            agregar_lenguaje(interpretado)
+            
+        interpretes.pop(lenguaje)
