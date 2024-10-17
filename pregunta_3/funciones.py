@@ -18,9 +18,11 @@ def definir(instruccion):
     if tipo == 'PROGRAMA':
         return programa(instruccion[1], instruccion[2])
     elif tipo == 'INTERPRETE':
-        return interprete(instruccion[1], instruccion[2])
+        interprete(instruccion[1], instruccion[2])
+        print("Se definió un intérprete de '"+ instruccion[1] + "' escrito en '" + instruccion[2] + "'.")
     elif tipo == 'TRADUCTOR':
-        return traductor(instruccion[1], instruccion[2], instruccion[3])
+        traductor(instruccion[1], instruccion[2], instruccion[3])
+        print("Se definió un traductor de '"+ instruccion[2] + "' hacia '" + instruccion[3] + "' escrito en '" + instruccion[1] + "'.")
     else:
         print("Error en los argumentos.")
         print("Opciones:\n DEFINIR PROGRAMA <nombre> <lenguaje>")
@@ -66,17 +68,30 @@ def interprete(lenguaje_base, lenguaje):
         else:
             lenguajes_interpretados.add(lenguaje)
             interpretes.update({lenguaje_base: lenguajes_interpretados})
-    
-    print("Se definió un intérprete de '"+ lenguaje + "' escrito en '" + lenguaje_base + "'.")
 
 #Define un traductor escrito en lenguaje_base, de lenguaje_origen a lenguaje_destino
 def traductor(lenguaje_base, lenguaje_origen, lenguaje_destino):
-    pass
+    
+    #Primero vemos si podemos ejecutar lenguaje_base
+    if lenguaje_base in lenguajes:
+        #De ser asi, podemos abstraernos y pensar en el traductor como un interprete
+        #para lenguaje_origen escrito en lenguaje_destino
+        interprete(lenguaje_destino, lenguaje_origen)
+
+    else:
+        #Si no, almacenamos el traductor por si el lenguaje_base se agrega luego
+        traducciones = traductores.get(lenguaje_base)
+
+        if traducciones == None:
+            traductores.update({lenguaje_base: {lenguaje_origen: lenguaje_destino}})
+        else:
+            traducciones.add({lenguaje_origen: lenguaje_destino})
+            traductores.update({lenguaje_base: traducciones})
 
 #Maneja las operaciones a considerar cuando se agrega un lenguaje ejecutable
 # esta funcion se define recursivamente para que se puedan agregar lenguajes
 # en cadena siempre que existan los interpretes (o traductores)
-# Es muy probable que esto hubiera podido hacerse con un DSU... peeero ya no hice eso desde el principio, asi que eh.
+# Es muy probable que esto hubiera podido hacerse con un DSU... peeero ya no hice eso desde el principio, asi que en lugar de eso tenemos un misterio.
 def agregar_lenguaje(lenguaje):
     lenguajes.add(lenguaje)
 
@@ -88,3 +103,17 @@ def agregar_lenguaje(lenguaje):
             agregar_lenguaje(interpretado)
             
         interpretes.pop(lenguaje)
+    
+    #Tambien hay que considerar los traductores escritos en el lenguaje
+    traducciones = traductores.get(lenguaje)
+    if traducciones != None:
+        for lenguaje_origen in traducciones: #iterar sobre diccionarios devuelve solo el key
+            lenguaje_destino = traducciones.get(lenguaje_origen)
+            #Si el lenguaje destino es ejecutable, agrega el lenguaje origen como ejecutable
+            if(lenguaje_destino in lenguajes):
+                agregar_lenguaje(lenguaje_origen)
+            else:
+                #Si no, a partir de ahora tratalo como un interprete:
+                interprete(lenguaje_destino, lenguaje_origen)
+
+        traductores.pop(lenguaje)

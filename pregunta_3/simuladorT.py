@@ -3,33 +3,35 @@
 from funciones import *
 
 #Cuerpo principal
-continuar = True
-#Prompt inicial
-print("Iniciando ejecucion del programa simuladorT.")
-print("Opciones:\n DEFINIR <tipo> [<argumentos>]")
-print(" EJECUTABLE <programa>\n SALIR\n")
+def main():
+    continuar = True
+    #Prompt inicial
+    print("Iniciando ejecucion del programa simuladorT.")
+    print("Opciones:\n DEFINIR <tipo> [<argumentos>]")
+    print(" EJECUTABLE <programa>\n SALIR\n")
 
-#Seleccion de opciones
-while continuar:
+    #Seleccion de opciones
+    while continuar:
 
-    print("$> ", end="")
-    comando = input()
+        print("$> ", end="")
+        comando = input()
 
-    #Si se ingresa 'SALIR', solo hay que salirse.
-    if comando == 'SALIR':
-        continuar = False
+        #Si se ingresa 'SALIR', solo hay que salirse.
+        if comando == 'SALIR':
+            continuar = False
     
-    #En caso contrario, hay que dividir la instruccion.
-    else:
-        instruccion = comando.split()
-        if instruccion[0] == 'DEFINIR':
-            definir(instruccion[1:4])
-        elif instruccion[0] == 'EJECUTABLE':
-            ejecutable(instruccion[1])
+        #En caso contrario, hay que dividir la instruccion.
         else:
-            print("Comando no reconocido.")
-            print("Opciones:\n  DEFINIR <tipo> [<argumentos>]")
-            print("EJECUTABLE <programa>\n SALIR\n")
+            instruccion = comando.split()
+            if instruccion[0] == 'DEFINIR':
+                definir(instruccion[1:4])
+            elif instruccion[0] == 'EJECUTABLE':
+                ejecutable(instruccion[1])
+            else:
+                print("Comando no reconocido.")
+                print("Opciones:\n DEFINIR <tipo> [<argumentos>]")
+                print(" EJECUTABLE <programa>\n SALIR\n")
 
-
+if __name__ == "__main__":
+    main()
             
