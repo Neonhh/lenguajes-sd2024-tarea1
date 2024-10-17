@@ -24,7 +24,7 @@ def main():
         else:
             instruccion = comando.split()
             if instruccion[0] == 'DEFINIR':
-                definir(instruccion[1:4])
+                definir(instruccion[1:])
             elif instruccion[0] == 'EJECUTABLE':
                 ejecutable(instruccion[1])
             else:
